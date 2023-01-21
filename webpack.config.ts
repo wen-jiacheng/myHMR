@@ -72,6 +72,10 @@ module.exports = smp.wrap({
     ],
   },
 
+  cache: {
+    type: "filesystem",
+  },
+
   module: {
     rules: [
       {
