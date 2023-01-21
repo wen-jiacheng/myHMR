@@ -6,6 +6,14 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
+// 速度分析
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+// 体积分析
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+
+const smp = new SpeedMeasurePlugin();
+
 const setMap = () => {
   const entry = {};
   const HtmlWebpackPlugins: any[] = [];
@@ -30,7 +38,7 @@ const setMap = () => {
 
 const { entry, HtmlWebpackPlugins } = setMap();
 
-module.exports = {
+module.exports = smp.wrap({
   mode: "development",
 
   devtool: "inline-source-map",
@@ -93,4 +101,4 @@ module.exports = {
     // new BundleAnalyzerPlugin(),
     ...HtmlWebpackPlugins,
   ],
-};
+});
