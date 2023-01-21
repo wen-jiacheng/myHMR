@@ -1,0 +1,16 @@
+*.log
+.DS_Store
+node_modules
+.cache
+dist
+.yalc
+lib
+.cava
+.cache-loader
+logs
+.logs
+yalc.lock
+coverage
+*.gz
+*.tar
+*.heapsnapshot
