@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development webpack-dev-server --config ./webpack.config.ts",
     "build": "NODE_ENV=development webpack --config ./webpack.config.ts",
-    "lv": "NODE_ENV=dev nodemon server.ts"
+    "lv": "nodemon --config ./nodemon.json"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
+    "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@types/react": "^18.0.27",
@@ -25,9 +26,11 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "esbuild-loader": "^2.21.0",
+    "express": "^4.18.2",
     "html-webpack-plugin": "^5.5.0",
     "less": "^4.1.3",
     "less-loader": "^11.1.0",
+    "ora": "^6.1.2",
     "speed-measure-webpack-plugin": "^1.5.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",

@@ -1,16 +1,15 @@
-const path = require("path");
-const glob = require("glob");
+import path from "path";
+import glob from "glob";
 
-const webpack = require("webpack");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+import webpack from "webpack";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import TerserPlugin from "terser-webpack-plugin";
 
 // 速度分析
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
 // 体积分析
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const smp = new SpeedMeasurePlugin();
 
@@ -38,7 +37,7 @@ const setMap = () => {
 
 const { entry, HtmlWebpackPlugins } = setMap();
 
-module.exports = smp.wrap({
+const config = {
   mode: "development",
 
   devtool: "inline-source-map",
@@ -105,4 +104,6 @@ module.exports = smp.wrap({
     // new BundleAnalyzerPlugin(),
     ...HtmlWebpackPlugins,
   ],
-});
+};
+
+export default smp.wrap(config);

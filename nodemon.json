@@ -1,0 +1,11 @@
+{
+  "restartable": "rs",
+  "verbose": false,
+  "ignore": [".git", "node_modules/", "dist/", "coverage/"],
+  "watch": ["./HMR"],
+  "exec": "node --inspect -r ts-node/register ./HMR/server.ts",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "ts,json"
+}
