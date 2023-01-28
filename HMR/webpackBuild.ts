@@ -1,15 +1,17 @@
 import webpack from "webpack";
 
-// import config from "../webpack.config.ts";
-import config from "../webpackConfigTS";
+import createConfig from "./createConfig";
 
-const webpackBuild = () => {
+const webpackBuild = (entryPath) => {
+  const config = createConfig(entryPath);
+
   return new Promise((resolve, reject) => {
     webpack(config, (err, stats) => {
       if (err) {
+        console.log("err");
         reject(err);
       } else if (stats.hasErrors()) {
-        reject(stats.toJson().errors.join("\n"));
+        reject(stats.toJson().errors);
       } else {
         process.stdout.write(
           stats.toString({

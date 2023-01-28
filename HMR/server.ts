@@ -14,26 +14,41 @@ app.get("*", async (req, res) => {
   let { url } = req;
 
   const fileName = url.split("/")[1];
+  const filesWithSuffixes = fileName.split(".").length > 1;
+  const filePath = filesWithSuffixes
+    ? path.join(__dirname, `./dist/${fileName}`)
+    : path.join(__dirname, `./dist/index.html`);
 
-  try {
-    await webpackBuild();
-  } catch (err) {
-    console.log("--- webpack build error ---");
-    console.log(err);
+  console.log(fileName, filesWithSuffixes, filePath);
+
+  if (!filesWithSuffixes) {
+    try {
+      const entryPath = url.split("/")[1];
+      const pathInSrc = path.join(__dirname, `./src/${entryPath}`);
+      const srcHaveFile = fs.existsSync(pathInSrc);
+
+      if (srcHaveFile) {
+        await webpackBuild(entryPath);
+      } else {
+        res
+          .status(400)
+          .type("application/json")
+          .send(`src 下没有名为 ${entryPath} 的目录`);
+      }
+    } catch (err) {
+      console.log("--- webpack build error ---");
+      res.status(400).type("application/json").send(err);
+    }
   }
 
   try {
-    const filePath = path.join(__dirname, `./dist/${fileName}`);
     const haveFile = fs.existsSync(filePath);
-
-    console.log("haveFile", haveFile);
-    console.log(filePath);
 
     if (haveFile) {
       const content = fs.readFileSync(filePath);
-      res.status(200).type("html").send(content);
+      res.status(200).send(content);
     } else {
-      res.status(400).send("no search file");
+      res.status(400).type("text").send("no search file");
     }
   } catch (err) {
     console.log("--- read file error ---");
