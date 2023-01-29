@@ -7,7 +7,7 @@ const createConfig = (entryPath) => {
   const entry = path.join(__dirname, `../src/${entryPath}`);
   const HtmlWebpackPlugins = new HtmlWebpackPlugin({
     template: path.join(__dirname, "../template/index.ejs"),
-    filename: "index.html",
+    filename: `${entryPath}.html`,
   });
 
   config.entry = entry;

@@ -17,9 +17,7 @@ app.get("*", async (req, res) => {
   const filesWithSuffixes = fileName.split(".").length > 1;
   const filePath = filesWithSuffixes
     ? path.join(__dirname, `./dist/${fileName}`)
-    : path.join(__dirname, `./dist/index.html`);
-
-  console.log(fileName, filesWithSuffixes, filePath);
+    : path.join(__dirname, `./dist/${fileName}.html`);
 
   if (!filesWithSuffixes) {
     try {
@@ -33,11 +31,12 @@ app.get("*", async (req, res) => {
         res
           .status(400)
           .type("application/json")
-          .send(`src 下没有名为 ${entryPath} 的目录`);
+          .end(`src 下没有名为 ${entryPath} 的目录`);
+        return;
       }
     } catch (err) {
       console.log("--- webpack build error ---");
-      res.status(400).type("application/json").send(err);
+      res.status(400).type("application/json").end(err);
     }
   }
 
@@ -46,9 +45,10 @@ app.get("*", async (req, res) => {
 
     if (haveFile) {
       const content = fs.readFileSync(filePath);
-      res.status(200).send(content);
+
+      res.status(200).end(content);
     } else {
-      res.status(400).type("text").send("no search file");
+      res.status(400).end("no search file");
     }
   } catch (err) {
     console.log("--- read file error ---");
